@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 //https://developer.infojobs.net/test-console/console.xhtml?operationEntityField=-offer&methodfield=GET&versionfield=1&hmethodfield=LIST
-
+/*
+ * NO FUNCIONA
+ */
 @Component
 public class InfojobsAPIClient {
 
