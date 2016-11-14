@@ -5,8 +5,14 @@ package com.app.anra.crauler.model.VOs;
  */
 public class Oferta {
 
-	private String nombre;
+	private String nombre_oferta;
+	private String nombre_empresa;
 	private String localizacion;
+	private String descrp_oferta;
+	private String responsabilidad;
+	private String tipo_jornada;
+	
+	
 	
 	
 }
