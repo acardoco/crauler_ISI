@@ -10,6 +10,16 @@
 	</parent>
 	<artifactId>crauler</artifactId>
 	<groupId>com.app.anra.crauler</groupId>
+	<developers>
+		<developer>
+			<id>Andrés Cardoso Cordero</id>
+			<email>100367776</email>
+		</developer>
+		<developer>
+			<id>Raúl Hernáez Ojeda</id>
+			<email>tu_numerito</email>
+		</developer>
+	</developers>
 	<name>CRAULER ISI</name>
 	<description>Práctica de dos alumnos de la UC3M NO madrileños</description>
 	<version>1.0</version>
