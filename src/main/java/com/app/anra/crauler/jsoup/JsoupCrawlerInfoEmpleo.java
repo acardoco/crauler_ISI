@@ -24,7 +24,7 @@ public class JsoupCrawlerInfoEmpleo {
 
 	
 	/** The num_paginas_infoempleo. */
-	public static int num_paginas_infoempleo = 250;
+	public static int num_paginas_infoempleo = 100; //maximo esta en 250 la ultima vez que lo mire
 	
 	/** The infoempleo_url. */
 	public static String infoempleo_url = "http://www.infoempleo.com/trabajo/";
