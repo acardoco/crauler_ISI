@@ -20,17 +20,17 @@ import com.app.anra.crauler.util.Util;
  */
 public class JsoupCrawlerInfoEmpleo {
 
-	/** The monster_url. */
-	public static String monster_url = "http://www.monster.es/trabajo/buscar/?cy=ES";
-
 	
 	/** The num_paginas_infoempleo. */
-	public static int num_paginas_infoempleo = 10; //maximo esta en 250 la ultima vez que lo mire
+	public static int num_paginas_infoempleo = 5; //maximo esta en 250 la ultima vez que lo mire 
+	//cada pagina tiene 20 elementos
 	
 	/** The infoempleo_url. */
 	public static String infoempleo_url = "http://www.infoempleo.com/trabajo/";
 	// SelectorGadget->extensión de chrome
 
+	
+	
 	
 	/**
 	 * Gets the nombre oferta info empleo.
@@ -196,16 +196,16 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @return the all pages info empleo
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<Oferta> getAllPagesInfoEmpleo(String url) throws IOException {
+	public static ArrayList<Oferta> getAllPagesInfoEmpleo() throws IOException {
 		ArrayList<Oferta> ofertasTotales = new ArrayList<Oferta>();
 		
 		for (int j = 1; j <= num_paginas_infoempleo; j++) {
 			
 			if (j > 1){
-				System.out.println("Voy por la pagina:" + url + "pagina_" + j);
-				ofertasTotales.addAll(toOfertas(url + "pagina_" + j));
+				System.out.println("Voy por la pagina:" + infoempleo_url + "pagina_" + j);
+				ofertasTotales.addAll(toOfertas(infoempleo_url + "pagina_" + j));
 			}else
-				ofertasTotales.addAll(toOfertas(url));
+				ofertasTotales.addAll(toOfertas(infoempleo_url));
 			
 		}
 		
@@ -223,7 +223,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 */
 	public static void main(String args[]) throws IOException {
 		// System.out.println(getNombreEmpresaAndLocalizacionInfoEmpleo(infoempleo_url));
-		List<Oferta> a = getAllPagesInfoEmpleo(infoempleo_url);
+		List<Oferta> a = getAllPagesInfoEmpleo();
 
 		for (int i = 0; i < a.size(); i++) {
 			System.out.println(a.get(i).toString());

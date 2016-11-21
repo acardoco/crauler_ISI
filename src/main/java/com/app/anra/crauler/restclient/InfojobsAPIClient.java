@@ -34,23 +34,23 @@ public class InfojobsAPIClient {
 		return cabezas;
 	}
 
-	public static void main(String[] args) throws Exception {
-		RestTemplate restTemplate = new RestTemplate();
-		
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
-		HttpEntity<HttpHeaders> entity = new HttpEntity<HttpHeaders>((createHeaders(username, password)), headers);
-		restTemplate.exchange(infoJobsUrl, HttpMethod.GET, entity, String.class);
-
-		
-		ResponseEntity<String> response = restTemplate.getForEntity(infoJobsUrl, String.class);
-
-		System.out.println(response);
-		
-
-	}
+//	public static void main(String[] args) throws Exception {
+//		RestTemplate restTemplate = new RestTemplate();
+//		
+//		
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//
+//		HttpEntity<HttpHeaders> entity = new HttpEntity<HttpHeaders>((createHeaders(username, password)), headers);
+//		restTemplate.exchange(infoJobsUrl, HttpMethod.GET, entity, String.class);
+//
+//		
+//		ResponseEntity<String> response = restTemplate.getForEntity(infoJobsUrl, String.class);
+//
+//		System.out.println(response);
+//		
+//
+//	}
 
 
 }
