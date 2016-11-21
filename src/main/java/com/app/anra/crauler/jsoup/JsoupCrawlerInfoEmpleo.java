@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.app.anra.crauler.model.VOs.Oferta;
+import com.app.anra.crauler.util.Util;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,24 +25,26 @@ public class JsoupCrawlerInfoEmpleo {
 
 	
 	/** The num_paginas_infoempleo. */
-	public static int num_paginas_infoempleo = 100; //maximo esta en 250 la ultima vez que lo mire
+	public static int num_paginas_infoempleo = 10; //maximo esta en 250 la ultima vez que lo mire
 	
 	/** The infoempleo_url. */
 	public static String infoempleo_url = "http://www.infoempleo.com/trabajo/";
 	// SelectorGadget->extensión de chrome
 
+	
 	/**
 	 * Gets the nombre oferta info empleo.
 	 *
 	 * @param url
 	 *            the url
+	 * @param doc 
 	 * @return the nombre oferta info empleo
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getNombreOfertaInfoEmpleo(String url) throws IOException {
+	public static ArrayList<String> getNombreOfertaInfoEmpleo(String url, Document doc) throws IOException {
 		ArrayList<String> listaNombres = new ArrayList<String>();
-		Document doc = Jsoup.connect(url).timeout(0).get();
+		
 
 		Elements lst = doc.select("h2 > a");
 		for (Element elem : lst) {
@@ -59,9 +62,9 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getNombreEmpresaInfoEmpleo(String url) throws IOException {
+	public static ArrayList<String> getNombreEmpresaInfoEmpleo(String url, Document doc) throws IOException {
 		ArrayList<String> listaNombres = new ArrayList<String>();
-		Document doc = Jsoup.connect(url).timeout(0).get();
+		
 
 		Elements lst = doc.select(".block");
 
@@ -91,9 +94,9 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getLocalizacionInfoEmpleo(String url) throws IOException {
+	public static ArrayList<String> getLocalizacionInfoEmpleo(String url, Document doc) throws IOException {
 		ArrayList<String> listaNombres = new ArrayList<String>();
-		Document doc = Jsoup.connect(url).timeout(0).get();
+		
 
 		Elements lst = doc.select(".block");
 
@@ -122,9 +125,9 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getExperienciaInfoEmpleo(String url) throws IOException {
+	public static ArrayList<String> getExperienciaInfoEmpleo(String url, Document doc) throws IOException {
 		ArrayList<String> exp = new ArrayList<String>();
-		Document doc = Jsoup.connect(url).timeout(0).get();
+		
 
 		Elements lst = doc.select("li > p[class*=small]");
 		for (Element elem : lst) {
@@ -142,9 +145,9 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getDescripcionInfoEmpleo(String url) throws IOException {
+	public static ArrayList<String> getDescripcionInfoEmpleo(String url, Document doc) throws IOException {
 		ArrayList<String> descp = new ArrayList<String>();
-		Document doc = Jsoup.connect(url).timeout(0).get();
+		
 
 		Elements lst = doc.select("li > p[class*=description]");
 		for (Element elem : lst) {
@@ -164,12 +167,14 @@ public class JsoupCrawlerInfoEmpleo {
 	 */
 	public static ArrayList<Oferta> toOfertas(String url) throws IOException {
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		
+		Document doc = Util.getHtml(infoempleo_url);
 
-		ArrayList<String> nombresOfertas = getNombreOfertaInfoEmpleo(url);
-		ArrayList<String> nombresEmpresas = getNombreEmpresaInfoEmpleo(url);
-		ArrayList<String> localizaciones = getLocalizacionInfoEmpleo(url);
-		ArrayList<String> descripciones = getDescripcionInfoEmpleo(url);
-		ArrayList<String> experiencias = getExperienciaInfoEmpleo(url);
+		ArrayList<String> nombresOfertas = getNombreOfertaInfoEmpleo(url,doc);
+		ArrayList<String> nombresEmpresas = getNombreEmpresaInfoEmpleo(url,doc);
+		ArrayList<String> localizaciones = getLocalizacionInfoEmpleo(url,doc);
+		ArrayList<String> descripciones = getDescripcionInfoEmpleo(url,doc);
+		ArrayList<String> experiencias = getExperienciaInfoEmpleo(url,doc);
 
 		for (int i = 0; i < nombresOfertas.size(); i++) {
 			Oferta ofertilla = new Oferta();
@@ -220,9 +225,9 @@ public class JsoupCrawlerInfoEmpleo {
 		// System.out.println(getNombreEmpresaAndLocalizacionInfoEmpleo(infoempleo_url));
 		List<Oferta> a = getAllPagesInfoEmpleo(infoempleo_url);
 
-//		for (int i = 0; i < a.size(); i++) {
-//			System.out.println(a.get(i).toString());
-//		}
+		for (int i = 0; i < a.size(); i++) {
+			System.out.println(a.get(i).toString());
+		}
 		System.out.println(a.size());
 	}
 
