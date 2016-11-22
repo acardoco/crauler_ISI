@@ -2,16 +2,10 @@ package com.app.anra.crauler.restclient;
 
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Base64;
 
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 //https://developer.infojobs.net/test-console/console.xhtml?operationEntityField=-offer&methodfield=GET&versionfield=1&hmethodfield=LIST
 /*
