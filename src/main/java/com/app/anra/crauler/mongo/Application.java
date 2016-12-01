@@ -14,22 +14,24 @@ public class Application {
 
 	private static ApplicationContext ctx;
 
+	
+	
 	public static void main(String[] args) throws IOException {
+		
+		
 
 		ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
 		ArrayList<Oferta> ofertasInfoEmpleo = JsoupCrawlerInfoEmpleo.getAllPagesInfoEmpleo();
 		
-
-
-		for (Oferta oferta : ofertasInfoEmpleo)
-			mongoOperation.save(oferta);
-//		
-		ArrayList<Oferta> listUser = (ArrayList<Oferta>) mongoOperation.findAll(Oferta.class);
+		
+		MongoFunctions.insertarEnBD(ofertasInfoEmpleo, mongoOperation);
+////		
+		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
 		System.out.println("4. Number of user = " + listUser.size());
 		
-		mongoOperation.dropCollection(Oferta.class);
+		MongoFunctions.dropDB(mongoOperation);
 
 	}
 }

@@ -22,7 +22,7 @@ public class JsoupCrawlerInfoEmpleo {
 
 	
 	/** The num_paginas_infoempleo. */
-	public static int num_paginas_infoempleo = 5; //maximo esta en 250 la ultima vez que lo mire 
+	public static int num_paginas_infoempleo = 2; //maximo esta en 250 la ultima vez que lo mire 
 	//cada pagina tiene 20 elementos
 	
 	/** The infoempleo_url. */
