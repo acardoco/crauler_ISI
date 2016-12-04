@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 import com.app.anra.crauler.model.VOs.Empresa;
 import com.app.anra.crauler.model.VOs.Oferta;
-import com.app.anra.crauler.model.VOs.Twitter;
+import com.app.anra.crauler.model.VOs.InfoJobsVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,10 +51,10 @@ public class infoJobsAPIClientApache {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static Twitter getOfertasAndEmpresas() throws ClientProtocolException, IOException {
+	public static InfoJobsVO getOfertasAndEmpresas() throws ClientProtocolException, IOException {
 
 		// nueva clase
-		Twitter twitterInfo = new Twitter();
+		InfoJobsVO empresasOfertas= new InfoJobsVO();
 
 		HttpHost targetHost = new HttpHost("api.infojobs.net", 443, "https");
 		CredentialsProvider provider = new BasicCredentialsProvider();
@@ -91,7 +91,7 @@ public class infoJobsAPIClientApache {
 					oferta.setLocalizacion(ofertaJSON.getJSONObject("province").get("value").toString());
 					oferta.setDescrp_oferta("descripción");
 					oferta.setExperiencia(ofertaJSON.getJSONObject("experienceMin").get("value").toString());
-					twitterInfo.addOferta(oferta);
+					empresasOfertas.addOferta(oferta);
 
 					companyRequest = new HttpGet(infoJobsCompanyURL + ofertaJSON.getJSONObject("author").get("id"));
 					response = client.execute(targetHost, companyRequest);
@@ -104,7 +104,7 @@ public class infoJobsAPIClientApache {
 					empresa.setNumEmployers(Integer.parseInt(empresaJSON.get("numberWorkers").toString()));
 					empresa.setLocation(empresaJSON.getJSONObject("country").get("value").toString());
 
-					twitterInfo.addEmpresa(empresa);
+					empresasOfertas.addEmpresa(empresa);
 				}
 
 			}
@@ -113,7 +113,7 @@ public class infoJobsAPIClientApache {
 			client.close();
 		}
 
-		return twitterInfo;
+		return empresasOfertas;
 
 	}
 
@@ -127,7 +127,7 @@ public class infoJobsAPIClientApache {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		Twitter pruebecita = getOfertasAndEmpresas();
+		InfoJobsVO pruebecita = getOfertasAndEmpresas();
 		for (Oferta o : pruebecita.getOfertas()) {
 			System.out.println(o.getNombre_oferta());
 			System.out.println(o.getNombre_empresa());

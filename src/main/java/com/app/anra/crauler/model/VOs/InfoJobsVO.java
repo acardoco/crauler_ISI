@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * The Class Twitter.
  */
-public class Twitter {
+public class InfoJobsVO {
 
 	/** The ofertas. */
 	private ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
@@ -20,7 +20,7 @@ public class Twitter {
 	 * @param ofertas the ofertas
 	 * @param empresas the empresas
 	 */
-	public Twitter(ArrayList<Oferta> ofertas, ArrayList<Empresa> empresas) {
+	public InfoJobsVO(ArrayList<Oferta> ofertas, ArrayList<Empresa> empresas) {
 		super();
 		this.ofertas = ofertas;
 		this.empresas = empresas;
@@ -29,7 +29,7 @@ public class Twitter {
 	/**
 	 * Instantiates a new twitter.
 	 */
-	public Twitter() {
+	public InfoJobsVO() {
 	}
 
 	/**
