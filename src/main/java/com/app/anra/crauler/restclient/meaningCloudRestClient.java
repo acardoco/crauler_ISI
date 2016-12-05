@@ -42,7 +42,9 @@ public class meaningCloudRestClient {
 
 			HttpResponse accessResponse = client.execute(targetHost, post);
 			JSONObject valoration = new JSONObject(EntityUtils.toString(accessResponse.getEntity(), "UTF-8"));
-			System.out.println(valoration.toString());
+			
+			System.out.println(valoration.getJSONArray("fragment_list").
+					getJSONObject(0).getJSONArray("info_list").getJSONObject(0).getString("sentiment"));
 	
 			
 		} catch (IOException e) {
