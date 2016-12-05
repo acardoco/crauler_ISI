@@ -80,7 +80,7 @@ public class Util {
 				newName = newName.substring(0, newName.length()-1);
 		}
 			
-		return newName;
+		return newName.trim();
 	}
 
 }

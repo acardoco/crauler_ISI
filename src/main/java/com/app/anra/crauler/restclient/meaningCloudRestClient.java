@@ -24,38 +24,45 @@ public class meaningCloudRestClient {
 	/** The key. */
 	private static String key = "c4adcae27d5f82325f0271e8c97d2d05";
 
-	
-	public static void getValoraciones(List<Tweet> tweets){
-		
-		HttpHost targetHost = new HttpHost("api.meaningcloud.com", 80, "http");
-		CloseableHttpClient client = HttpClientBuilder.create().build();
-		
-		HttpPost post = new HttpPost(meaningCloudURL);
-		List<BasicNameValuePair> parametersList = new ArrayList<BasicNameValuePair>();
-		parametersList.add( new BasicNameValuePair("key", key));
-		parametersList.add( new BasicNameValuePair("txt", "Everis me parece una puta mierda"));
-		parametersList.add( new BasicNameValuePair("model", "BusinessRep_es"));
-		
-		try {
-			post.setEntity(new UrlEncodedFormEntity(parametersList));
-			post.addHeader("content-type", "application/x-www-form-urlencoded");
+	public static List<Tweet> getValoraciones(List<Tweet> tweets) {
 
-			HttpResponse accessResponse = client.execute(targetHost, post);
-			JSONObject valoration = new JSONObject(EntityUtils.toString(accessResponse.getEntity(), "UTF-8"));
-			
-			System.out.println(valoration.getJSONArray("fragment_list").
-					getJSONObject(0).getJSONArray("info_list").getJSONObject(0).getString("sentiment"));
-	
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<Tweet> newTweets = new ArrayList<Tweet>();
+
+		for (Tweet t : tweets) {
+			HttpHost targetHost = new HttpHost("api.meaningcloud.com", 80, "http");
+			CloseableHttpClient client = HttpClientBuilder.create().build();
+
+			HttpPost post = new HttpPost(meaningCloudURL);
+			List<BasicNameValuePair> parametersList = new ArrayList<BasicNameValuePair>();
+			parametersList.add(new BasicNameValuePair("key", key));
+			parametersList.add(new BasicNameValuePair("txt", t.getTexto()));
+			parametersList.add(new BasicNameValuePair("model", "BusinessRep_es"));
+
+			try {
+				post.setEntity(new UrlEncodedFormEntity(parametersList));
+				post.addHeader("content-type", "application/x-www-form-urlencoded");
+
+				HttpResponse accessResponse = client.execute(targetHost, post);
+				JSONObject valoration = new JSONObject(EntityUtils.toString(accessResponse.getEntity(), "UTF-8"));
+
+				//para que no casque si no hay fragment_list
+				if (valoration.optBoolean("fragment_list")) {
+					String sentimientoo = valoration.getJSONArray("fragment_list").getJSONObject(0)
+							.getJSONArray("info_list").getJSONObject(0).getString("sentiment");
+					t.setValoracion(sentimientoo);
+					newTweets.add(t);
+				}
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+
+		return newTweets;
+
 	}
-	
-	
-	
+
 	public static void main(String[] args) {
 		getValoraciones(new ArrayList<Tweet>());
 

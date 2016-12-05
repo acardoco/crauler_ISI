@@ -1,9 +1,9 @@
 package com.app.anra.crauler.mongo;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -33,26 +33,30 @@ public class Application {
 		// de InfoEMPLEO.
 		ofertas.addAll(ofertasYempresas.getOfertas());
 
-		// Para cada empresa, obtenemos la lista de tweets (= 15)
+		// Para cada empresa, obtenemos la lista de tweets (= 15), y
+		// actualizamos las valoraciones de cada tweet
 		ArrayList<Empresa> empresas = ofertasYempresas.getEmpresas();
 		for (Empresa e : empresas) {
 
 			if (e.getNumEmployers() >= 100) {
-				e.setTweets(TwitterRestClient.getTweets(Util.cleanName(e.getName())));
-				meaningCloudRestClient.getValoraciones(e.getTweets());
+				e.setTweets(TwitterRestClient.getTweets(URLEncoder.encode(Util.cleanName(e.getName()), "UTF-8")));
+				//AQUI NO CAMBIA LAS VALORACIONES
+				e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
 			}
 		}
-		// De cada empresa, cogemos lo twetts y se lo pasamos a meaning cloud
-		// para obtener las valoraciones
-		
+
 		// Insertamos en Mongo los resultados
 
 		MongoFunctions.insertarEnBD(ofertas, mongoOperation);
+		MongoFunctions.insertarEmpresasEnBD(ofertasYempresas.getEmpresas(), mongoOperation);
+
+		// Aplicamos map reduce
+
 		////
 		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
 		System.out.println("4. Number of user = " + listUser.size());
 
-		MongoFunctions.dropDB(mongoOperation);
+		// MongoFunctions.dropDB(mongoOperation);
 
 	}
 }

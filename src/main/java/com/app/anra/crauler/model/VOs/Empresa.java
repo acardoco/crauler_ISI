@@ -3,6 +3,9 @@ package com.app.anra.crauler.model.VOs;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "empresas")
 public class Empresa {
 
 	private String name;
@@ -19,7 +22,7 @@ public class Empresa {
 		this.numEmployers = numEmployers;
 		this.location = location;
 
-		tweets = new ArrayList<Tweet>();
+		this.tweets = new ArrayList<Tweet>();
 	}
 
 	public Empresa() {
@@ -77,5 +80,6 @@ public class Empresa {
 	public void setTweets(List<Tweet> tweets) {
 		this.tweets = tweets;
 	}
+	
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import com.app.anra.crauler.model.VOs.Empresa;
 import com.app.anra.crauler.model.VOs.Oferta;
 
 // TODO: Auto-generated Javadoc
@@ -23,6 +24,12 @@ public interface MongoFunctions extends MongoRepository<Oferta, String>{
 
 		for (Oferta oferta : ofertasInfoEmpleo)
 			mongoOperation.save(oferta);
+	}
+	
+	public static void insertarEmpresasEnBD(ArrayList<Empresa> empresas, MongoOperations mongoOperation) {
+
+		for (Empresa e : empresas)
+			mongoOperation.save(e);
 	}
 	
 	/**
