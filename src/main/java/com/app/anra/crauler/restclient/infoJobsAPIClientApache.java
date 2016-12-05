@@ -1,7 +1,6 @@
 package com.app.anra.crauler.restclient;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -18,8 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.app.anra.crauler.model.VOs.Empresa;
-import com.app.anra.crauler.model.VOs.Oferta;
 import com.app.anra.crauler.model.VOs.InfoJobsVO;
+import com.app.anra.crauler.model.VOs.Oferta;
 
 // TODO: Auto-generated Javadoc
 /**

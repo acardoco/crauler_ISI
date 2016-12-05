@@ -1,4 +1,4 @@
-package com.app.anra.crauler.twitterclient;
+package com.app.anra.crauler.restclient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,8 @@ import org.apache.http.util.EntityUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.app.anra.crauler.model.VOs.Tweet;
 
 // TODO: Auto-generated Javadoc
 /*
@@ -95,11 +97,12 @@ public class TwitterRestClient {
 	 * @param empresa the empresa
 	 * @return the tweets
 	 */
-	public static JSONArray getTweets(String empresa) {
+	public static List<Tweet> getTweets(String empresa) {
 
 		HttpHost targetHost = new HttpHost("api.twitter.com", 443, "https");
 		CloseableHttpClient client = HttpClientBuilder.create().build();
-		JSONArray tweets = null;
+		JSONArray JSONtweets = null;
+		List<Tweet> tweets = null;
 
 		try {
 
@@ -109,8 +112,16 @@ public class TwitterRestClient {
 
 			HttpResponse tweetsResponse = client.execute(targetHost, tweetsRequest);
 
-			tweets = (new JSONObject(EntityUtils.toString(tweetsResponse.getEntity(), "UTF-8"))
+			JSONtweets = (new JSONObject(EntityUtils.toString(tweetsResponse.getEntity(), "UTF-8"))
 					.getJSONArray("statuses"));
+			
+			
+			 tweets = new ArrayList<Tweet>();
+			
+			for (int numTweet = 0; numTweet < JSONtweets.length(); numTweet++) {
+				tweets.add(new Tweet(JSONtweets.getJSONObject(numTweet).getString("text")));
+			}
+
 
 		} catch (IOException e) {
 
@@ -120,16 +131,6 @@ public class TwitterRestClient {
 		return tweets;
 	}
 
-	/**
-	 * Prints the tweets.
-	 *
-	 * @param tweets the tweets
-	 */
-	public static void printTweets(JSONArray tweets) {
-		for (int numTweet = 0; numTweet < tweets.length(); numTweet++) {
-			System.out.println(tweets.getJSONObject(numTweet).getString("text"));
-		}
-	}
 	
 	/**
 	 * The main method.
@@ -137,10 +138,7 @@ public class TwitterRestClient {
 	 * @param args the arguments
 	 * @throws Exception the exception
 	 */
-	public static void main(String[] args) throws Exception {
-		
-		printTweets(getTweets("everis"));
-		
+	public static void main(String[] args) throws Exception {		
 	}
 
 }

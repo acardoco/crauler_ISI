@@ -10,7 +10,7 @@ public class Empresa {
 	private String type;
 	private int numEmployers;
 	private String location;
-	private List<String> tweets;
+	private List<Tweet> tweets;
 
 	public Empresa(String name, String description, String type, int numEmployers, String location) {
 		this.name = name;
@@ -19,18 +19,18 @@ public class Empresa {
 		this.numEmployers = numEmployers;
 		this.location = location;
 
-		tweets = new ArrayList<String>();
+		tweets = new ArrayList<Tweet>();
 	}
 
 	public Empresa() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<String> getTweets() {
+	public List<Tweet> getTweets() {
 		return tweets;
 	}
 
-	public void addTweet(String tweet) {
+	public void addTweet(Tweet tweet) {
 		tweets.add(tweet);
 	}
 
@@ -74,7 +74,7 @@ public class Empresa {
 		this.name = name;
 	}
 
-	public void setTweets(List<String> tweets) {
+	public void setTweets(List<Tweet> tweets) {
 		this.tweets = tweets;
 	}
 

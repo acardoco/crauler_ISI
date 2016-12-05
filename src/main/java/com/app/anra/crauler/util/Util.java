@@ -67,5 +67,20 @@ public class Util {
 
 		return doc;
 	}
+	
+	public static String cleanName(String name){
+		
+		String[] splitName = name.split(("\\s+"));
+		String newName = name;
+		
+		if(splitName[splitName.length -1].contains("."))
+		{
+			newName = name.replace(" " + splitName[splitName.length -1], "");
+			if(newName.charAt(newName.length()-1) == ',') 
+				newName = newName.substring(0, newName.length()-1);
+		}
+			
+		return newName;
+	}
 
 }
