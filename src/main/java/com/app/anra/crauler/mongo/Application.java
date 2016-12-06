@@ -37,24 +37,24 @@ public class Application {
 		ArrayList<Empresa> empresas = ofertasYempresas.getEmpresas();
 		for (Empresa e : empresas) {
 
-			if (e.getNumEmployers() >= 10000) {
+			if (e.getName().contains("Halcon")) {
 				e.setTweets(TwitterRestClient.getTweets((Util.cleanName(e.getName()))));
 				//AQUI NO CAMBIA LAS VALORACIONES
-				meaningCloudRestClient.getValoraciones(e.getTweets());
+				//meaningCloudRestClient.getValoraciones(e.getTweets());
 			}
 			
 		}
 
 		// Insertamos en Mongo los resultados
 
-		MongoFunctions.insertarEnBD(ofertas, mongoOperation);
-		MongoFunctions.insertarEmpresasEnBD(ofertasYempresas.getEmpresas(), mongoOperation);
+		//MongoFunctions.insertarEnBD(ofertas, mongoOperation);
+		//MongoFunctions.insertarEmpresasEnBD(ofertasYempresas.getEmpresas(), mongoOperation);
 
 		// Aplicamos map reduce
 
 		////
-		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
-		System.out.println("4. Number of user = " + listUser.size());
+		//ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
+		//System.out.println("4. Number of user = " + listUser.size());
 
 		// MongoFunctions.dropDB(mongoOperation);
 

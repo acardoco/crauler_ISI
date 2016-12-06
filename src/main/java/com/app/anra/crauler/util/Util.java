@@ -70,6 +70,8 @@ public class Util {
 	
 	public static String cleanName(String name){
 		
+		
+		name = name.toLowerCase();
 		String[] splitName = name.split(("\\s+"));
 		String newName = name;
 		
@@ -79,8 +81,21 @@ public class Util {
 			if(newName.charAt(newName.length()-1) == ',') 
 				newName = newName.substring(0, newName.length()-1);
 		}
+		
+		String[] stopwords = {"franquicia", "constructora", "ofertas", "tiendas",
+				"tienda", " sl", " sau", " slu", "almacenes"}; 
+		
+		for(int i=0; i < stopwords.length; i++){ 
+			if(newName.contains(stopwords[i]))
+				newName = newName.replace(stopwords[i], "");
+		}
 			
 		return newName.trim();
 	}
+	
+	public static void main(String[] args) throws Exception {
+		System.out.println(cleanName("Halcon Viajes Franquicia"));
+	}
+
 
 }

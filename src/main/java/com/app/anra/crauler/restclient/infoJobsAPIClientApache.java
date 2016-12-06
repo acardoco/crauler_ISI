@@ -103,7 +103,8 @@ public class infoJobsAPIClientApache {
 					empresa.setNumEmployers(empresaJSON.getInt("numberWorkers"));
 					empresa.setLocation(empresaJSON.getJSONObject("country").getString("value"));
 		
-					if(!empresasOfertas.getEmpresas().contains(empresa)){
+					if(!empresasOfertas.getEmpresas().contains(empresa) && 
+							!empresa.getName().toLowerCase().contains("empresa")){
 						empresasOfertas.addEmpresa(empresa);
 					}
 				}
