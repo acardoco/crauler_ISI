@@ -83,7 +83,7 @@ public class Util {
 		}
 		
 		String[] stopwords = {"franquicia", "constructora", "ofertas", "tiendas",
-				"tienda", " sl", " sau", " slu", "almacenes"}; 
+				"tienda", " sl", " sau", " slu", "almacenes"};
 		
 		for(int i=0; i < stopwords.length; i++){ 
 			if(newName.contains(stopwords[i]))

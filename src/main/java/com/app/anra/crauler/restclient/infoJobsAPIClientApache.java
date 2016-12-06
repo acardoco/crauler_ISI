@@ -107,6 +107,7 @@ public class infoJobsAPIClientApache {
 							!empresa.getName().toLowerCase().contains("empresa")){
 						empresasOfertas.addEmpresa(empresa);
 					}
+					
 				}
 
 			}
