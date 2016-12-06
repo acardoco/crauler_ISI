@@ -24,11 +24,10 @@ public class meaningCloudRestClient {
 	/** The key. */
 	private static String key = "c4adcae27d5f82325f0271e8c97d2d05";
 
-	public static List<Tweet> getValoraciones(List<Tweet> tweets) {
-
-		List<Tweet> newTweets = new ArrayList<Tweet>();
+	public static void getValoraciones(List<Tweet> tweets) {
 
 		for (Tweet t : tweets) {
+			
 			HttpHost targetHost = new HttpHost("api.meaningcloud.com", 80, "http");
 			CloseableHttpClient client = HttpClientBuilder.create().build();
 
@@ -47,10 +46,9 @@ public class meaningCloudRestClient {
 
 				//para que no casque si no hay fragment_list
 				if (valoration.optBoolean("fragment_list")) {
-					String sentimientoo = valoration.getJSONArray("fragment_list").getJSONObject(0)
+					String sentimiento = valoration.getJSONArray("fragment_list").getJSONObject(0)
 							.getJSONArray("info_list").getJSONObject(0).getString("sentiment");
-					t.setValoracion(sentimientoo);
-					newTweets.add(t);
+					t.setValoracion(sentimiento);
 				}
 
 			} catch (IOException e) {
@@ -59,13 +57,8 @@ public class meaningCloudRestClient {
 			}
 		}
 
-		return newTweets;
-
 	}
 
-	public static void main(String[] args) {
-		getValoraciones(new ArrayList<Tweet>());
-
-	}
+	public static void main(String[] args) { }
 
 }

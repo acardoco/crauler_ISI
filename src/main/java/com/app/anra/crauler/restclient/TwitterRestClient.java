@@ -1,6 +1,7 @@
 package com.app.anra.crauler.restclient;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +99,6 @@ public class TwitterRestClient {
 	 * @return the tweets
 	 */
 	public static List<Tweet> getTweets(String empresa) {
-
 		HttpHost targetHost = new HttpHost("api.twitter.com", 443, "https");
 		CloseableHttpClient client = HttpClientBuilder.create().build();
 		JSONArray JSONtweets = null;
@@ -106,7 +106,8 @@ public class TwitterRestClient {
 
 		try {
 
-			HttpGet tweetsRequest = new HttpGet(twitterSearchURL + empresa + "&lang=es&result_type=recent");
+			HttpGet tweetsRequest = new HttpGet(twitterSearchURL + URLEncoder.encode(empresa, "UTF-8") + 
+					"&lang=es&result_type=&result_type=mixed");
 			tweetsRequest.addHeader("User-Agent", "SearchRestClient");
 			tweetsRequest.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
 
@@ -114,7 +115,6 @@ public class TwitterRestClient {
 
 			JSONtweets = (new JSONObject(EntityUtils.toString(tweetsResponse.getEntity(), "UTF-8"))
 					.getJSONArray("statuses"));
-			
 			
 			 tweets = new ArrayList<Tweet>();
 			
@@ -138,7 +138,8 @@ public class TwitterRestClient {
 	 * @param args the arguments
 	 * @throws Exception the exception
 	 */
-	public static void main(String[] args) throws Exception {		
+	public static void main(String[] args) throws Exception {
+		getTweets("paté de pato");
 	}
 
 }

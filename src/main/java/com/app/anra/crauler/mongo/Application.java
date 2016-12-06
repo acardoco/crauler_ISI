@@ -1,7 +1,6 @@
 package com.app.anra.crauler.mongo;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.springframework.context.ApplicationContext;
@@ -38,11 +37,12 @@ public class Application {
 		ArrayList<Empresa> empresas = ofertasYempresas.getEmpresas();
 		for (Empresa e : empresas) {
 
-			if (e.getNumEmployers() >= 100) {
-				e.setTweets(TwitterRestClient.getTweets(URLEncoder.encode(Util.cleanName(e.getName()), "UTF-8")));
+			if (e.getNumEmployers() >= 10000) {
+				e.setTweets(TwitterRestClient.getTweets((Util.cleanName(e.getName()))));
 				//AQUI NO CAMBIA LAS VALORACIONES
-				e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
+				meaningCloudRestClient.getValoraciones(e.getTweets());
 			}
+			
 		}
 
 		// Insertamos en Mongo los resultados

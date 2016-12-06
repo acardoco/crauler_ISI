@@ -22,4 +22,10 @@ public class Tweet {
 	public void setValoracion(String valoracion) {
 		this.valoracion = valoracion;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getTexto() + "\n"; 
+	}
 }

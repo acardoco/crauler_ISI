@@ -30,7 +30,7 @@ public class infoJobsAPIClientApache {
 	private static String infoJobsOffersURL = "/api/1/offer?page=";
 
 	/** The num pages. */
-	private static int numPages = 1; // MAX = 114;
+	private static int numPages = 5; // MAX = 114;
 
 	/** The info jobs company URL. */
 	private static String infoJobsCompanyURL = "/api/1/profile/";
@@ -97,13 +97,15 @@ public class infoJobsAPIClientApache {
 					empresaJSON = new JSONObject(EntityUtils.toString(response.getEntity(), "UTF-8"));
 
 					Empresa empresa = new Empresa();
-					empresa.setName(empresaJSON.get("name").toString());
-					empresa.setDescription(empresaJSON.get("description").toString());
-					empresa.setType(empresaJSON.getJSONObject("typeIndustry").get("value").toString());
-					empresa.setNumEmployers(Integer.parseInt(empresaJSON.get("numberWorkers").toString()));
-					empresa.setLocation(empresaJSON.getJSONObject("country").get("value").toString());
-
-					empresasOfertas.addEmpresa(empresa);
+					empresa.setName(empresaJSON.getString("name"));
+					empresa.setDescription(empresaJSON.getString("description"));
+					empresa.setType(empresaJSON.getJSONObject("typeIndustry").getString("value"));
+					empresa.setNumEmployers(empresaJSON.getInt("numberWorkers"));
+					empresa.setLocation(empresaJSON.getJSONObject("country").getString("value"));
+		
+					if(!empresasOfertas.getEmpresas().contains(empresa)){
+						empresasOfertas.addEmpresa(empresa);
+					}
 				}
 
 			}

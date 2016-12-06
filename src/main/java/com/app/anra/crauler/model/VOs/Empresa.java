@@ -81,5 +81,15 @@ public class Empresa {
 		this.tweets = tweets;
 	}
 	
+	@Override
+	public boolean equals(Object object)
+	{
+		boolean equal = false;
+		if (object != null && object instanceof Empresa) 
+			{
+	            equal = this.getName().equalsIgnoreCase(((Empresa) object).getName());
+	        }
 
+	        return equal;
+	    }
 }
