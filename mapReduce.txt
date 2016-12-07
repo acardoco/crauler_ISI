@@ -4,7 +4,23 @@ se aplica mapReduce a todos(esa es la idea).
 map = function () {
 	var tweet = this;
 	emit(tweet.valoracion, { count: 1, valoracionTotal: tweet.valoracion });
-};
+}
+
+map = function () {
+	var oferta = this;
+	emit(oferta.localizacion, {count: 1});
+}
+
+reduce =  function(key, values) {
+
+		var result = 0;
+		
+        values.forEach(function(value){
+        	result++
+        });
+
+        return result;
+}
 
 reduce =  function(key, values) {
         var result = {count: 0, valoracionTotal: 0 };

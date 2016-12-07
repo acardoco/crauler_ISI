@@ -15,6 +15,9 @@ import com.app.anra.crauler.model.VOs.Oferta;
 import com.app.anra.crauler.model.VOs.Tweet;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceOutput;
 import com.mongodb.MongoClient;
 
 // TODO: Auto-generated Javadoc
@@ -61,10 +64,14 @@ public interface MongoFunctions extends MongoRepository<Oferta, String> {
 	 */
 	static void calcularMedia(MongoOperations mongoOperation, List<Empresa> empresas) throws UnknownHostException {
 
-		String map = "function () { var tweet = this; emit(tweet.valoracion, { count: 1, valoracionTotal: tweet.valoracion });};";
+		String map = "function () {" + "var oferta = this;" + "emit(oferta.localizacion, {count: 1});" + "}";
+		String reduce = " function(key, values) {"
 
-		String reduce = " function(key, values)  var result = {count: 0, valoracionTotal: 0 };  values.forEach(function(value)if (result.valoracionTotal != 404){result.count += value.count; result.valoracionTotal += value.valoracionTota});return result;}";
+		+ "var result = 0;"
 
+		+ " values.forEach(function(value){" + "result++" + "   });"
+
+		+ "   return result;" + "}";
 		String finalize = " function(key, value){" + " value.average = value.valoracionTotal / value.count;"
 				+ "if (value.average <= 2 OR value.average >1)" + "	value.average = 2;"
 				+ " if (value.average <= 1 OR value.average >0)" + " 	value.average = 1;"
@@ -79,19 +86,16 @@ public interface MongoFunctions extends MongoRepository<Oferta, String> {
 		DB db = mongoClient.getDB("craulerdb");
 		;
 
-		DBCollection empresasData = db.getCollection("empresas");
+		DBCollection tweetsData = db.getCollection("ofertas");
 
-		for (Empresa e : empresas) {
-			for (Tweet t : e.getTweets()) {
-				MapReduceResults<Tweet> results = mongoOperation.mapReduce(empresasData.toString(), map, reduce, new MapReduceOptions()
-						.outputCollection("map_reduce_java_test").outputTypeReplace().finalizeFunction(finalize),
-						Tweet.class);
-				for (Tweet valueObject : results) {
-					System.out.println(valueObject);
-				}
-			}
-
-		}
+		  MapReduceCommand cmd = new MapReduceCommand(tweetsData, map, reduce,
+                  null, MapReduceCommand.OutputType.INLINE, null);
+		  
+		    MapReduceOutput out = tweetsData.mapReduce(cmd);
+		 
+		    for (DBObject o : out.results()) {
+		        System.out.println(o.toString());
+		    }
 
 		// mongoOperation.mapReduce(a, b, c, d);
 	}
@@ -119,6 +123,4 @@ public interface MongoFunctions extends MongoRepository<Oferta, String> {
 
 	}
 
-
-	
 }
