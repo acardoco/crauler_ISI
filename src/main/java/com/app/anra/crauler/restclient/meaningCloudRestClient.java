@@ -34,7 +34,8 @@ public class meaningCloudRestClient {
 			HttpPost post = new HttpPost(meaningCloudURL);
 			List<BasicNameValuePair> parametersList = new ArrayList<BasicNameValuePair>();
 			parametersList.add(new BasicNameValuePair("key", key));
-			parametersList.add(new BasicNameValuePair("txt", t.getTexto()));
+			parametersList.add(new BasicNameValuePair("txt", "Mañana voy a Women's Secret para "
+					+ "que mi miren cual marido depravado que no tiene ni idea la de talla de sujetador de su mujer"));
 			parametersList.add(new BasicNameValuePair("model", "BusinessRep_es"));
 
 			try {
@@ -43,6 +44,7 @@ public class meaningCloudRestClient {
 
 				HttpResponse accessResponse = client.execute(targetHost, post);
 				JSONObject valoration = new JSONObject(EntityUtils.toString(accessResponse.getEntity(), "UTF-8"));
+				System.out.println(valoration.toString());
 
 				//para que no casque si no hay fragment_list
 				if (valoration.optBoolean("fragment_list")) {
@@ -59,6 +61,8 @@ public class meaningCloudRestClient {
 
 	}
 
-	public static void main(String[] args) { }
+	public static void main(String[] args) { 
+		getValoraciones(new ArrayList<Tweet>());
+	}
 
 }
