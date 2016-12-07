@@ -86,10 +86,12 @@ public class infoJobsAPIClientApache {
 
 					Oferta oferta = new Oferta();
 					oferta.setNombre_oferta(ofertaJSON.get("title").toString());
-					oferta.setNombre_empresa(ofertaJSON.getJSONObject("author").get("name").toString());
-					oferta.setLocalizacion(ofertaJSON.getJSONObject("province").get("value").toString());
-					oferta.setDescrp_oferta("descripción");
+					oferta.setNombre_empresa(ofertaJSON.getJSONObject("author").getString("name"));
+					oferta.setLocalizacion(ofertaJSON.getJSONObject("province").getString("value"));
 					oferta.setExperiencia(ofertaJSON.getJSONObject("experienceMin").get("value").toString());
+					oferta.setContrato(ofertaJSON.getJSONObject("contractType").getString("value"));
+					oferta.setSalario(getSalario(ofertaJSON));
+					oferta.setJornada(ofertaJSON.getJSONObject("workDay").getString("value"));
 					empresasOfertas.addOferta(oferta);
 
 					companyRequest = new HttpGet(infoJobsCompanyURL + ofertaJSON.getJSONObject("author").get("id"));
@@ -117,7 +119,22 @@ public class infoJobsAPIClientApache {
 		}
 
 		return empresasOfertas;
-
+	}
+	
+	private static String getSalario(JSONObject oferta){
+		
+		String salarioTotal = "";
+		String salarioMin = oferta.getJSONObject("salaryMin").getString("value");
+		String salarioMax = oferta.getJSONObject("salaryMax").getString("value");
+		
+		if(!salarioMin.isEmpty()) salarioTotal = salarioMin;
+		if(!salarioMax.isEmpty()){
+			if (salarioMin.isEmpty()) salarioTotal = salarioMax;
+			else salarioTotal = salarioTotal + " - " + salarioMax;
+		}
+		salarioTotal = salarioTotal + " " + oferta.getJSONObject("salaryPeriod").getString("value") ;
+		
+		return (salarioTotal.isEmpty() ? salarioTotal : null);
 	}
 
 	/**

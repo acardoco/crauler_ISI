@@ -42,7 +42,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getNombreOfertaInfoEmpleo(String url, Document doc) throws IOException {
+	public static ArrayList<String> getNombreOfertaInfoEmpleo(Document doc) throws IOException {
 		ArrayList<String> listaNombres = new ArrayList<String>();
 		
 
@@ -62,7 +62,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getNombreEmpresaInfoEmpleo(String url, Document doc) throws IOException {
+	public static ArrayList<String> getNombreEmpresaInfoEmpleo(Document doc) throws IOException {
 		ArrayList<String> listaNombres = new ArrayList<String>();
 		
 
@@ -94,7 +94,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getLocalizacionInfoEmpleo(String url, Document doc) throws IOException {
+	public static ArrayList<String> getLocalizacionInfoEmpleo(Document doc) throws IOException {
 		ArrayList<String> listaNombres = new ArrayList<String>();
 		
 
@@ -125,15 +125,60 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getExperienciaInfoEmpleo(String url, Document doc) throws IOException {
+	public static ArrayList<String> getExperienciaInfoEmpleo(Document doc) throws IOException {
 		ArrayList<String> exp = new ArrayList<String>();
+		
+		Elements lst = doc.select("li > p[class*=small]");
+		
+		for (Element elem : lst) {
+			exp.add(getDato("experiencia", elem.text()));
+		}
+		return exp;
+	}
+	
+	
+	public static ArrayList<String> getSalarioInfoEmpleo(Document doc) throws IOException {
+		ArrayList<String> salario = new ArrayList<String>();
 		
 
 		Elements lst = doc.select("li > p[class*=small]");
 		for (Element elem : lst) {
-			exp.add(elem.text());
+			salario.add(getDato("salario", elem.text()));
 		}
-		return exp;
+		return salario;
+	}
+	
+	public static ArrayList<String> getJornadaInfoEmpleo(Document doc) throws IOException {
+		ArrayList<String> jornada = new ArrayList<String>();
+		
+
+		Elements lst = doc.select("li > p[class*=small]");
+		for (Element elem : lst) {
+			jornada.add(getDato("jornada", elem.text()));
+		}
+		return jornada;
+	}
+	
+	public static ArrayList<String> getContratoInfoEmpleo(Document doc) throws IOException {
+		ArrayList<String> contrato = new ArrayList<String>();
+		
+
+		Elements lst = doc.select("li > p[class*=small]");
+		for (Element elem : lst) {
+			contrato.add(getDato("contrato", elem.text()));
+		}
+		return contrato;
+	}
+	
+	private static String getDato(String dato, String texto){
+		
+		String [] array = texto.split(",");
+		String datoString = "NO_DATA";
+		for(int i=0; i< array.length; i++){
+			if(array[i].toLowerCase().contains(dato)) datoString = array[i];
+		}
+		
+		return datoString;
 	}
 
 	/**
@@ -145,7 +190,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static ArrayList<String> getDescripcionInfoEmpleo(String url, Document doc) throws IOException {
+	public static ArrayList<String> getDescripcionInfoEmpleo(Document doc) throws IOException {
 		ArrayList<String> descp = new ArrayList<String>();
 		
 
@@ -170,20 +215,26 @@ public class JsoupCrawlerInfoEmpleo {
 		
 		Document doc = Util.getHtml(infoempleo_url);
 
-		ArrayList<String> nombresOfertas = getNombreOfertaInfoEmpleo(url,doc);
-		ArrayList<String> nombresEmpresas = getNombreEmpresaInfoEmpleo(url,doc);
-		ArrayList<String> localizaciones = getLocalizacionInfoEmpleo(url,doc);
-		ArrayList<String> descripciones = getDescripcionInfoEmpleo(url,doc);
-		ArrayList<String> experiencias = getExperienciaInfoEmpleo(url,doc);
+		ArrayList<String> nombresOfertas = getNombreOfertaInfoEmpleo(doc);
+		ArrayList<String> nombresEmpresas = getNombreEmpresaInfoEmpleo(doc);
+		ArrayList<String> localizaciones = getLocalizacionInfoEmpleo(doc);
+		ArrayList<String> descripciones = getDescripcionInfoEmpleo(doc);
+		ArrayList<String> experiencias = getExperienciaInfoEmpleo(doc);
+		ArrayList<String> salarios = getSalarioInfoEmpleo(doc);
+		ArrayList<String> contratos = getContratoInfoEmpleo(doc);
+		ArrayList<String> jornadas = getJornadaInfoEmpleo(doc);
 
 		for (int i = 0; i < nombresOfertas.size(); i++) {
-			Oferta ofertilla = new Oferta();
-			ofertilla.setNombre_oferta(nombresOfertas.get(i));
-			ofertilla.setNombre_empresa(nombresEmpresas.get(i));
-			ofertilla.setLocalizacion(localizaciones.get(i));
-			ofertilla.setDescrp_oferta(descripciones.get(i));
-			ofertilla.setExperiencia(experiencias.get(i));
-			ofertas.add(ofertilla);
+			Oferta oferta = new Oferta();
+			oferta.setNombre_oferta(nombresOfertas.get(i));
+			oferta.setNombre_empresa(nombresEmpresas.get(i));
+			oferta.setLocalizacion(localizaciones.get(i));
+			oferta.setDescrp_oferta(descripciones.get(i));
+			oferta.setExperiencia(experiencias.get(i));
+			oferta.setSalario(salarios.get(i));
+			oferta.setJornada(jornadas.get(i));
+			oferta.setContrato(contratos.get(i));
+			ofertas.add(oferta);
 		}
 
 		return ofertas;

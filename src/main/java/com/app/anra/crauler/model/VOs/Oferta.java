@@ -37,14 +37,17 @@ public class Oferta {
 
 	/** The experiencia. */
 	private String experiencia;
+	
+	private String salario;
+	
+	private String jornada;
+	
+	private String contrato;
 
 	/**
 	 * Instantiates a new oferta.
 	 */
-	public Oferta() {
-
-	}
-	
+	public Oferta() { }
 	
 
 	/**
@@ -56,6 +59,34 @@ public class Oferta {
 		return id;
 	}
 
+	public String getSalario() {
+		return salario;
+	}
+
+
+	public void setSalario(String salario) {
+		this.salario = salario;
+	}
+
+
+	public String getJornada() {
+		return jornada;
+	}
+
+
+	public void setJornada(String jornada) {
+		this.jornada = jornada;
+	}
+
+
+	public String getContrato() {
+		return contrato;
+	}
+
+
+	public void setContrato(String contrato) {
+		this.contrato = contrato;
+	}
 
 
 	/**
