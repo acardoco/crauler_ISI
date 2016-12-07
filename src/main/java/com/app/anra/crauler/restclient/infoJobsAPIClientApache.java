@@ -134,7 +134,7 @@ public class infoJobsAPIClientApache {
 		}
 		salarioTotal = salarioTotal + " " + oferta.getJSONObject("salaryPeriod").getString("value") ;
 		
-		return (salarioTotal.isEmpty() ? salarioTotal : null);
+		return (!salarioTotal.isEmpty() ? salarioTotal.toLowerCase().replace(" €", "€") : null);
 	}
 
 	/**
@@ -149,17 +149,7 @@ public class infoJobsAPIClientApache {
 
 		InfoJobsVO pruebecita = getOfertasAndEmpresas();
 		for (Oferta o : pruebecita.getOfertas()) {
-			System.out.println(o.getNombre_oferta());
-			System.out.println(o.getNombre_empresa());
-			System.out.println(o.getLocalizacion());
-			System.out.println(o.getExperiencia());
-			System.out.println("-------------------------------");
-		}
-
-		for (Empresa e : pruebecita.getEmpresas()) {
-			System.out.println(e.getName());
-			System.out.println(e.getNumEmployers());
-			System.out.println("-------------------------------");
+			System.out.println(o.toString());
 		}
 	}
 

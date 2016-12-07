@@ -29,12 +29,6 @@ public class Oferta {
 	/** The descrp_oferta. */
 	private String descrp_oferta;
 
-	/** The responsabilidad. */
-	private String responsabilidad;
-
-	/** The tipo_jornada. */
-	private String tipo_jornada;
-
 	/** The experiencia. */
 	private String experiencia;
 	
@@ -177,44 +171,6 @@ public class Oferta {
 	}
 
 	/**
-	 * Gets the responsabilidad.
-	 *
-	 * @return the responsabilidad
-	 */
-	public String getResponsabilidad() {
-		return responsabilidad;
-	}
-
-	/**
-	 * Sets the responsabilidad.
-	 *
-	 * @param responsabilidad
-	 *            the new responsabilidad
-	 */
-	public void setResponsabilidad(String responsabilidad) {
-		this.responsabilidad = responsabilidad;
-	}
-
-	/**
-	 * Gets the tipo_jornada.
-	 *
-	 * @return the tipo_jornada
-	 */
-	public String getTipo_jornada() {
-		return tipo_jornada;
-	}
-
-	/**
-	 * Sets the tipo_jornada.
-	 *
-	 * @param tipo_jornada
-	 *            the new tipo_jornada
-	 */
-	public void setTipo_jornada(String tipo_jornada) {
-		this.tipo_jornada = tipo_jornada;
-	}
-
-	/**
 	 * Gets the experiencia.
 	 *
 	 * @return the experiencia
@@ -233,14 +189,11 @@ public class Oferta {
 		this.experiencia = experiencia;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Oferta [nombre_oferta=" + nombre_oferta + ", nombre_empresa=" + nombre_empresa + ", localizacion="
-				+ localizacion + ", descrp_oferta=" + descrp_oferta + ", responsabilidad=" + responsabilidad
-				+ ", tipo_jornada=" + tipo_jornada + ", experiencia=" + experiencia + "]";
+		return "Oferta [id=" + id + ", nombre_oferta=" + nombre_oferta + ", nombre_empresa=" + nombre_empresa
+				+ ", localizacion=" + localizacion + ", descrp_oferta=" + descrp_oferta + ", experiencia=" + experiencia
+				+ ", salario=" + salario + ", jornada=" + jornada + ", contrato=" + contrato + "]";
 	}
 
 }

@@ -173,11 +173,11 @@ public class JsoupCrawlerInfoEmpleo {
 	private static String getDato(String dato, String texto){
 		
 		String [] array = texto.split(",");
-		String datoString = "NO_DATA";
+		String datoString = null;
 		for(int i=0; i< array.length; i++){
-			if(array[i].toLowerCase().contains(dato)) datoString = array[i];
+			if(array[i].toLowerCase().contains(dato)) datoString = array[i].replaceAll("salario", "").trim();
 		}
-		
+
 		return datoString;
 	}
 
@@ -192,8 +192,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 */
 	public static ArrayList<String> getDescripcionInfoEmpleo(Document doc) throws IOException {
 		ArrayList<String> descp = new ArrayList<String>();
-		
-
+	
 		Elements lst = doc.select("li > p[class*=description]");
 		for (Element elem : lst) {
 			descp.add(elem.text());
@@ -213,7 +212,7 @@ public class JsoupCrawlerInfoEmpleo {
 	public static ArrayList<Oferta> toOfertas(String url) throws IOException {
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		
-		Document doc = Util.getHtml(infoempleo_url);
+		Document doc = Util.getHtml(url);
 
 		ArrayList<String> nombresOfertas = getNombreOfertaInfoEmpleo(doc);
 		ArrayList<String> nombresEmpresas = getNombreEmpresaInfoEmpleo(doc);
@@ -252,8 +251,8 @@ public class JsoupCrawlerInfoEmpleo {
 		
 		for (int j = 1; j <= num_paginas_infoempleo; j++) {
 			
+			System.out.println("página: " + j + "------------");
 			if (j > 1){
-				System.out.println("Voy por la pagina:" + infoempleo_url + "pagina_" + j);
 				ofertasTotales.addAll(toOfertas(infoempleo_url + "pagina_" + j));
 			}else
 				ofertasTotales.addAll(toOfertas(infoempleo_url));
