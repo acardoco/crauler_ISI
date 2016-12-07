@@ -40,7 +40,7 @@ public class Application {
 			if (e.getNumEmployers() > 5000) {
 				e.setTweets(TwitterRestClient.getTweets((Util.cleanName(e.getName()))));
 				//AQUI NO CAMBIA LAS VALORACIONES
-				meaningCloudRestClient.getValoraciones(e.getTweets());
+				e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
 			}
 			
 		}
@@ -56,7 +56,7 @@ public class Application {
 		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
 		System.out.println("4. Number of user = " + listUser.size());
 
-		MongoFunctions.dropDB(mongoOperation);
+//		MongoFunctions.dropDB(mongoOperation);
 
 	}
 }
