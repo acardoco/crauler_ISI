@@ -116,7 +116,7 @@ public class TwitterRestClient {
 			JSONtweets = (new JSONObject(EntityUtils.toString(tweetsResponse.getEntity(), "UTF-8"))
 					.getJSONArray("statuses"));
 			
-			 tweets = new ArrayList<Tweet>();
+			tweets = new ArrayList<Tweet>();
 			
 			for (int numTweet = 0; numTweet < JSONtweets.length(); numTweet++) {
 				tweets.add(new Tweet(JSONtweets.getJSONObject(numTweet).getString("text")));

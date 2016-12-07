@@ -70,7 +70,6 @@ public class Util {
 	
 	public static String cleanName(String name){
 		
-		
 		name = name.toLowerCase();
 		String[] splitName = name.split(("\\s+"));
 		String newName = name;
@@ -82,8 +81,9 @@ public class Util {
 				newName = newName.substring(0, newName.length()-1);
 		}
 		
-		String[] stopwords = {"franquicia", "constructora", "ofertas", "tiendas",
-				"tienda", " sl", " sau", " slu", "almacenes"};
+		String[] stopwords = {"franquicia", "constructora", "ofertas", "oferta", "tienda", "tiendas",
+				"tienda", " sl", " sau", " slu", "almacenes", 
+				"profesionales", "empleo", "trabajo", "temporal", "oficinas"};
 		
 		for(int i=0; i < stopwords.length; i++){ 
 			if(newName.contains(stopwords[i]))

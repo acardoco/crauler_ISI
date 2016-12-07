@@ -39,7 +39,7 @@ public class meaningCloudRestClient {
 			parametersList.add(new BasicNameValuePair("lang", "es"));
 			parametersList.add(new BasicNameValuePair("txt", t.getTexto()));
 			parametersList.add(new BasicNameValuePair("model", "general"));
-			
+
 
 			try {
 				post.setEntity(new UrlEncodedFormEntity(parametersList));
@@ -47,6 +47,7 @@ public class meaningCloudRestClient {
 
 				HttpResponse accessResponse = client.execute(targetHost, post);
 				JSONObject valoration = new JSONObject(EntityUtils.toString(accessResponse.getEntity(), "UTF-8"));
+				System.out.println(valoration.toString());
 
 				// para que no casque si no hay fragment_list
 				if (valoration.has("score_tag")) {
@@ -66,6 +67,7 @@ public class meaningCloudRestClient {
 	}
 
 	public static void main(String[] args) {
+
 	}
 
 }
