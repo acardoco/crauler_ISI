@@ -52,7 +52,7 @@ public class meaningCloudRestClient {
 
 				if (valoration.has("score_tag")) {
 					String sentimiento = valoration.getString("score_tag");
-					t.setValoracion(Util.setValoraciones(sentimiento));
+					t.setValoracion(sentimiento);
 
 				}
 				ts.add(t);

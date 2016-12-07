@@ -2,13 +2,14 @@ mapReduce calcula la valoración media de cada Empresa: se le pasa la lista de t
 se aplica mapReduce a todos(esa es la idea).
 
 map = function () {
-	var tweet = this;
-	emit(tweet.valoracion, { count: 1, valoracionTotal: tweet.valoracion });
+	var oferta = this;
+	emit(oferta.localizacion, {count: 1});
 }
 
 map = function () {
-	var oferta = this;
-	emit(oferta.localizacion, {count: 1});
+	this.tweets.forEach(function(item){ 
+		emit(empresa.name, item.valoracion); 
+	});
 }
 
 reduce =  function(key, values) {
@@ -23,17 +24,29 @@ reduce =  function(key, values) {
 }
 
 reduce =  function(key, values) {
-        var result = {count: 0, valoracionTotal: 0 };
 
+		var count = 0;
+		var media = 0;
+		
         values.forEach(function(value){
-        	if (result.valoracionTotal != 404){               
-           	 result.count += value.count;
-           	 result.valoracionTotal += value.valoracionTotal;
+        	if (value != "NONE"){  
+        		count++;             
+           		if(value == "P+") media = media + 5;
+           		if(value == "P") media = media + 4;
+           		if(value == "NEU") media = media + 3;
+           		if(value == "N") media = media + 2;
+           		if(value == "N+") media = media + 1;
             }
         });
 
-        return result;
-    }
+       	if (count != 0) media = round(media/count);
+       	if(media = 1) return 'N+';
+       	if(media = 2) return 'N';
+       	if(media = 3) return 'NEU';
+       	if(media = 4) return 'P';
+       	if(media = 5) return 'P+';
+       	else return 'NONE'
+}
     
  finalize =   function(key, value){
       value.average = value.valoracionTotal / value.count;

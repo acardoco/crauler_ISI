@@ -29,9 +29,6 @@ public class JsoupCrawlerInfoEmpleo {
 	public static String infoempleo_url = "http://www.infoempleo.com/trabajo/";
 	// SelectorGadget->extensión de chrome
 
-	
-	
-	
 	/**
 	 * Gets the nombre oferta info empleo.
 	 *

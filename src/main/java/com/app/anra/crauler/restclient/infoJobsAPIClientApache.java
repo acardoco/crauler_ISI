@@ -134,7 +134,7 @@ public class infoJobsAPIClientApache {
 		}
 		salarioTotal = salarioTotal + " " + oferta.getJSONObject("salaryPeriod").getString("value") ;
 		
-		return (!salarioTotal.isEmpty() ? salarioTotal.toLowerCase().replace(" €", "€") : null);
+		return (!salarioTotal.trim().isEmpty() ? salarioTotal.toLowerCase().replace(" €", "€") : null);
 	}
 
 	/**

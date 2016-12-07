@@ -3,23 +3,23 @@ package com.app.anra.crauler.model.VOs;
 public class Tweet {
 	
 	private String texto;
-	private int valoracion;
+	private String valoracion;
 	
 	public Tweet(String texto) {
 
 		this.texto = texto;
-		this.valoracion = 404;
+		this.valoracion = "NONE";
 	}
 
 	public String getTexto() {
 		return texto;
 	}
 
-	public int getValoracion() {
+	public String getValoracion() {
 		return valoracion;
 	}
 
-	public void setValoracion(int valoracion) {
+	public void setValoracion(String valoracion) {
 		this.valoracion = valoracion;
 	}
 

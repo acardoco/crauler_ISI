@@ -97,22 +97,20 @@ public class Util {
 		return newName.trim();
 	}
 
-	public static Integer setValoraciones(String val) {
+	/*public static Integer setValoraciones(String val) {
 		int returned = 0;
 		if (val.equals("P+"))
-			returned = 2;
+			returned = 5;
 		if (val.equals("P"))
-			returned = 1;
+			returned = 4;
 		if (val.equals("NEU"))
-			returned = 0;
+			returned = 3;
 		if (val.equals("N"))
-			returned = -1;
+			returned = 2;
 		if (val.equals("N+"))
-			returned = -2;
-		if (val.equals("P+"))
-			returned = 404;
+			returned = 1;
 		return returned;
-	}
+	}*/
 
 	public static void main(String[] args) throws Exception {
 		System.out.println(cleanName("Halcon Viajes Franquicia"));

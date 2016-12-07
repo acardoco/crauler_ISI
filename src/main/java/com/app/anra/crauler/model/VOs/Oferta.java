@@ -7,9 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * The Class Oferta.
  */
-/*
- * en obras...
- */
+
 @Document(collection = "ofertas")
 public class Oferta {
 	
