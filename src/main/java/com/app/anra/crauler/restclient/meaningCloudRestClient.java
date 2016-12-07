@@ -15,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import com.app.anra.crauler.model.VOs.Tweet;
+import com.app.anra.crauler.util.Util;
 
 public class meaningCloudRestClient {
 
@@ -49,10 +50,9 @@ public class meaningCloudRestClient {
 				JSONObject valoration = new JSONObject(EntityUtils.toString(accessResponse.getEntity(), "UTF-8"));
 				System.out.println(valoration.toString());
 
-				// para que no casque si no hay fragment_list
 				if (valoration.has("score_tag")) {
 					String sentimiento = valoration.getString("score_tag");
-					t.setValoracion(sentimiento);
+					t.setValoracion(Util.setValoraciones(sentimiento));
 
 				}
 				ts.add(t);

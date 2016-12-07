@@ -14,6 +14,7 @@ public class Empresa {
 	private int numEmployers;
 	private String location;
 	private List<Tweet> tweets;
+	private String mediaValoraciones;
 
 	public Empresa(String name, String description, String type, int numEmployers, String location) {
 		this.name = name;
@@ -80,16 +81,22 @@ public class Empresa {
 	public void setTweets(List<Tweet> tweets) {
 		this.tweets = tweets;
 	}
-	
-	@Override
-	public boolean equals(Object object)
-	{
-		boolean equal = false;
-		if (object != null && object instanceof Empresa) 
-			{
-	            equal = this.getName().equalsIgnoreCase(((Empresa) object).getName());
-	        }
 
-	        return equal;
-	    }
+	public String getMediaValoraciones() {
+		return mediaValoraciones;
+	}
+
+	public void setMediaValoraciones(String mediaValoraciones) {
+		this.mediaValoraciones = mediaValoraciones;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		boolean equal = false;
+		if (object != null && object instanceof Empresa) {
+			equal = this.getName().equalsIgnoreCase(((Empresa) object).getName());
+		}
+
+		return equal;
+	}
 }

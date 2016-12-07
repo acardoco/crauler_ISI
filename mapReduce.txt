@@ -1,0 +1,40 @@
+mapReduce calcula la valoración media de cada Empresa: se le pasa la lista de tweets y 
+se aplica mapReduce a todos(esa es la idea).
+
+map = function () {
+	var tweet = this;
+	emit(tweet.valoracion, { count: 1, valoracionTotal: tweet.valoracion });
+};
+
+reduce =  function(key, values) {
+        var result = {count: 0, valoracionTotal: 0 };
+
+        values.forEach(function(value){
+        	if (result.valoracionTotal != 404){               
+           	 result.count += value.count;
+           	 result.valoracionTotal += value.valoracionTotal;
+            }
+        });
+
+        return result;
+    }
+    
+ finalize =   function(key, value){
+      value.average = value.valoracionTotal / value.count;
+      if (value.average <= 2 OR value.average >1)
+      	value.average = 2;
+      if (value.average <= 1 OR value.average >0)
+      	value.average = 1;
+      if (value.average <= 0 OR value.average >-1)
+      	value.average = 0;
+      if (value.average <= -1 OR value.average >-2)
+      	value.average = -1;
+      if (value.average <= -2 OR value.average >-3)
+      	value.average = 2;
+      if (value.average <= 404 OR value.average >2)
+      	value.average = 404;   
+      return value;
+    }
+}
+
+
