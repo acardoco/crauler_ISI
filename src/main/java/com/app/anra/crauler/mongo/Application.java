@@ -24,6 +24,7 @@ public class Application {
 
 	public static void main(String[] args) throws IOException {
 
+		
 		ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
@@ -54,7 +55,7 @@ public class Application {
 
 		// Aplicamos MapReduce.
 		MongoFunctions.calcularMedia();
-		// MongoFunctions.calcularLocalizaciones();
+
 
 		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
 		System.out.println("4. Number of user = " + listUser.size());

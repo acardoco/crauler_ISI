@@ -9,10 +9,12 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceOptions;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.core.query.Query;
 
 import com.app.anra.crauler.model.VOs.Empresa;
 import com.app.anra.crauler.model.VOs.Oferta;
 import com.app.anra.crauler.model.VOs.Tweet;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -99,9 +101,21 @@ public interface MongoFunctions extends MongoRepository<Oferta, String> {
 		MapReduceCommand cmd = new MapReduceCommand(empresas, map, reduce, null, MapReduceCommand.OutputType.INLINE, null);
 
 		MapReduceOutput out = empresas.mapReduce(cmd);
-		    for (DBObject o : out.results()) {
-		        System.out.println(o.toString());
+		
+		
+		ArrayList<DBObject> resultados = new ArrayList<DBObject>();
+		for(DBObject o: out.results()) resultados.add(o);
+		BasicDBObject newDocument;;
+		int i = 0;
+		
+		for (DBObject o : empresas.find()) {
+			
+			newDocument = new BasicDBObject();
+			newDocument.append("$set", new BasicDBObject().append("mediaValoraciones", resultados.get(i).get("value").toString()));
+			empresas.update(o, newDocument);
+			i++;
 		}
+		    
 	}
 
 	/**

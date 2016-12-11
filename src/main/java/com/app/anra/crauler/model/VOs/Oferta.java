@@ -1,11 +1,12 @@
 package com.app.anra.crauler.model.VOs;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Transient;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,6 +15,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "ofertas")
 public class Oferta {
+	
+	@Transient
+	private static SimpleDateFormat SDF = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", 
+			new Locale("es", "ES"));
 	
 	/** The id. */
 	@Id
@@ -40,34 +45,21 @@ public class Oferta {
 	
 	private String contrato;
 	
-	private Calendar fecha;
+	private String fecha;
 
-	public Calendar getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
 
 	public void setFechaInfoJobs(String fecha) {
-		
-		Calendar cal = Calendar.getInstance();
-		
-		if(fecha != null){
-			
-			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-				cal.setTime(sdf.parse(fecha.replace("T", " ").replace(".000Z", "")));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}		
-		}
-		
-		this.fecha = cal;
+		this.fecha = fecha.replace("T", " ").replace(".000Z", "");
 	}
 	
 	public void setFechaInfoEmpleo(String fecha){
 		
 		Calendar cal = Calendar.getInstance();
-		
+
 		if(fecha != null){
 		
 			fecha = fecha.toLowerCase().replace("hace", "")
@@ -83,7 +75,7 @@ public class Oferta {
 			else if (fecha.contains("días") || fecha.contains("día")) cal.add(Calendar.DATE, num);
 		}
 		
-		this.fecha = cal;
+		this.fecha = SDF.format(cal.getTime());
 	}
 
 
@@ -118,6 +110,7 @@ public class Oferta {
 
 
 	public void setJornada(String jornada) {
+		if(jornada != null) if(jornada.trim().isEmpty()) jornada = null;
 		this.jornada = jornada;
 	}
 
@@ -128,6 +121,7 @@ public class Oferta {
 
 
 	public void setContrato(String contrato) {
+		if(contrato != null) if(contrato.trim().isEmpty()) contrato = null;
 		this.contrato = contrato;
 	}
 
@@ -235,6 +229,7 @@ public class Oferta {
 	 *            the new experiencia
 	 */
 	public void setExperiencia(String experiencia) {
+		if(experiencia != null) if(experiencia.trim().isEmpty()) experiencia = null;
 		this.experiencia = experiencia;
 	}
 
