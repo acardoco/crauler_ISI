@@ -92,7 +92,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public static ArrayList<String> getLocalizacionInfoEmpleo(Document doc) throws IOException {
-		ArrayList<String> listaNombres = new ArrayList<String>();
+		ArrayList<String> listaLocalizaciones = new ArrayList<String>();
 		
 
 		Elements lst = doc.select(".block");
@@ -101,8 +101,8 @@ public class JsoupCrawlerInfoEmpleo {
 
 		for (Element elem : lst) {
 
-			if (filtrador == 1) // Mete en el Hash la Localidad
-				listaNombres.add(elem.text());
+			if (filtrador == 1)
+				listaLocalizaciones.add(elem.text());
 			if (filtrador == 2) {
 				filtrador = 0;
 				continue;
@@ -110,7 +110,7 @@ public class JsoupCrawlerInfoEmpleo {
 			filtrador++;
 		}
 
-		return listaNombres;
+		return listaLocalizaciones;
 	}
 
 	/**
@@ -167,6 +167,31 @@ public class JsoupCrawlerInfoEmpleo {
 		return contrato;
 	}
 	
+
+	public static ArrayList<String> getFechaInfoEmpleo(Document doc) throws IOException {
+		
+		ArrayList<String> listaFechas = new ArrayList<String>();;
+		
+
+		Elements lst = doc.select(".block");
+
+		int filtrador = 0;
+
+		for (Element elem : lst) {
+
+			if (filtrador == 2){
+				listaFechas.add(elem.text());
+				filtrador = 0;
+				continue;
+			}
+
+			filtrador++;
+		}
+
+		return listaFechas;
+	}
+	
+	
 	private static String getDato(String dato, String texto){
 		
 		String [] array = texto.split(",");
@@ -219,6 +244,7 @@ public class JsoupCrawlerInfoEmpleo {
 		ArrayList<String> salarios = getSalarioInfoEmpleo(doc);
 		ArrayList<String> contratos = getContratoInfoEmpleo(doc);
 		ArrayList<String> jornadas = getJornadaInfoEmpleo(doc);
+		ArrayList<String> fechas = getFechaInfoEmpleo(doc);
 
 		for (int i = 0; i < nombresOfertas.size(); i++) {
 			Oferta oferta = new Oferta();
@@ -230,6 +256,7 @@ public class JsoupCrawlerInfoEmpleo {
 			oferta.setSalario(salarios.get(i));
 			oferta.setJornada(jornadas.get(i));
 			oferta.setContrato(contratos.get(i));
+			oferta.setFechaInfoEmpleo(fechas.get(i));
 			ofertas.add(oferta);
 		}
 

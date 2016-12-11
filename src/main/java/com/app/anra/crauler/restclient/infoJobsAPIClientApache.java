@@ -85,13 +85,14 @@ public class infoJobsAPIClientApache {
 					ofertaJSON = ofertasJSON.getJSONObject(numOferta);
 
 					Oferta oferta = new Oferta();
-					oferta.setNombre_oferta(ofertaJSON.get("title").toString());
+					oferta.setNombre_oferta(ofertaJSON.getString("title"));
 					oferta.setNombre_empresa(ofertaJSON.getJSONObject("author").getString("name"));
 					oferta.setLocalizacion(ofertaJSON.getJSONObject("province").getString("value"));
-					oferta.setExperiencia(ofertaJSON.getJSONObject("experienceMin").get("value").toString());
+					oferta.setExperiencia(ofertaJSON.getJSONObject("experienceMin").getString("value"));
 					oferta.setContrato(ofertaJSON.getJSONObject("contractType").getString("value"));
 					oferta.setSalario(getSalario(ofertaJSON));
 					oferta.setJornada(ofertaJSON.getJSONObject("workDay").getString("value"));
+					oferta.setFechaInfoJobs(ofertaJSON.getString("published"));
 					empresasOfertas.addOferta(oferta);
 
 					companyRequest = new HttpGet(infoJobsCompanyURL + ofertaJSON.getJSONObject("author").get("id"));
@@ -103,7 +104,7 @@ public class infoJobsAPIClientApache {
 					empresa.setDescription(empresaJSON.getString("description"));
 					empresa.setType(empresaJSON.getJSONObject("typeIndustry").getString("value"));
 					empresa.setNumEmployers(empresaJSON.getInt("numberWorkers"));
-					empresa.setLocation(empresaJSON.getJSONObject("country").getString("value"));
+					empresa.setLocation(empresaJSON.getJSONObject("province").getString("value"));
 		
 					if(!empresasOfertas.getEmpresas().contains(empresa) && 
 							!empresa.getName().toLowerCase().contains("empresa")){

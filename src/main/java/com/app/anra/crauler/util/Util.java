@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import org.jsoup.Jsoup;
@@ -114,6 +116,26 @@ public class Util {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println(cleanName("Halcon Viajes Franquicia"));
+		
+		
+		String fecha = "Hace 8 horas.";
+		fecha = fecha.toLowerCase().replace("hace", "").replace("más de", "").trim();
+		
+		Calendar cal = Calendar.getInstance();
+		int num = -Integer.parseInt(fecha.split("\\s+")[0].trim());
+		
+		if(fecha.contains("horas") || fecha.contains("hora")){
+			cal.add(Calendar.HOUR, num);
+			
+		} else if (fecha.contains("días") || fecha.contains("día")){
+			cal.add(Calendar.DATE, num);
+		}
+		
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String formatted = format1.format(cal.getTime());
+		System.out.println(formatted);
+		
+	
 	}
 
 }

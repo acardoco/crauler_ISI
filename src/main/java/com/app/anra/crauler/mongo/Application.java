@@ -52,8 +52,8 @@ public class Application {
 		
 
 		// Aplicamos MapReduce.
-		MongoFunctions.calcularMedia();
-		MongoFunctions.calcularLocalizaciones();
+		//MongoFunctions.calcularMedia();
+		//MongoFunctions.calcularLocalizaciones();
 
 		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
 		System.out.println("4. Number of user = " + listUser.size());

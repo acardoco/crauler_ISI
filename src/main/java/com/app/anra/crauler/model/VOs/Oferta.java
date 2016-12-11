@@ -1,5 +1,9 @@
 package com.app.anra.crauler.model.VOs;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -35,6 +39,53 @@ public class Oferta {
 	private String jornada;
 	
 	private String contrato;
+	
+	private Calendar fecha;
+
+	public Calendar getFecha() {
+		return fecha;
+	}
+
+
+	public void setFechaInfoJobs(String fecha) {
+		
+		Calendar cal = Calendar.getInstance();
+		
+		if(fecha != null){
+			
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+				cal.setTime(sdf.parse(fecha.replace("T", " ").replace(".000Z", "")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}		
+		}
+		
+		this.fecha = cal;
+	}
+	
+	public void setFechaInfoEmpleo(String fecha){
+		
+		Calendar cal = Calendar.getInstance();
+		
+		if(fecha != null){
+		
+			fecha = fecha.toLowerCase().replace("hace", "")
+										.replace("más de", "")
+										.replace("menos de", "")
+										.replace("una", "1")
+										.replace("un", "1")
+										.trim();
+			
+			int num = -Integer.parseInt(fecha.split("\\s+")[0].trim());
+		
+			if(fecha.contains("horas") || fecha.contains("hora")) cal.add(Calendar.HOUR, num);
+			else if (fecha.contains("días") || fecha.contains("día")) cal.add(Calendar.DATE, num);
+		}
+		
+		this.fecha = cal;
+	}
+
 
 	/**
 	 * Instantiates a new oferta.
