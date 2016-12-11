@@ -22,6 +22,7 @@ public class Application {
 
 	public static void main(String[] args) throws IOException {
 
+		
 		ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
@@ -37,7 +38,7 @@ public class Application {
 		ArrayList<Empresa> empresas = ofertasYempresas.getEmpresas();
 		for (Empresa e : empresas) {
 
-			if (e.getNumEmployers() > 5000) {
+			if (e.getNumEmployers() > 100) {
 				e.setTweets(TwitterRestClient.getTweets((Util.cleanName(e.getName()))));
 				//AQUI NO CAMBIA LAS VALORACIONES
 				if(e.getTweets() != null) e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
@@ -52,7 +53,7 @@ public class Application {
 		
 
 		// Aplicamos MapReduce.
-		//MongoFunctions.calcularMedia();
+		MongoFunctions.calcularMedia();
 		//MongoFunctions.calcularLocalizaciones();
 
 		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
