@@ -20,6 +20,8 @@ public class Application {
 
 	private static ApplicationContext ctx;
 
+	static int numEmpleados = 100;
+
 	public static void main(String[] args) throws IOException {
 
 		ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
@@ -37,28 +39,27 @@ public class Application {
 		ArrayList<Empresa> empresas = ofertasYempresas.getEmpresas();
 		for (Empresa e : empresas) {
 
-			if (e.getNumEmployers() > 5000) {
+			if (e.getNumEmployers() > numEmpleados) {
 				e.setTweets(TwitterRestClient.getTweets((Util.cleanName(e.getName()))));
-				//AQUI NO CAMBIA LAS VALORACIONES
-				if(e.getTweets() != null) e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
-		}
-		
+				// AQUI NO CAMBIA LAS VALORACIONES
+				if (e.getTweets() != null)
+					e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
+			}
+
 		}
 
-		
 		// Insertamos en MongoDB los resultados.
 		MongoFunctions.insertarEnBD(ofertas, mongoOperation);
 		MongoFunctions.insertarEmpresasEnBD(empresas, mongoOperation);
-		
 
 		// Aplicamos MapReduce.
-		//MongoFunctions.calcularMedia();
-		//MongoFunctions.calcularLocalizaciones();
+		MongoFunctions.calcularMedia();
+		// MongoFunctions.calcularLocalizaciones();
 
 		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
 		System.out.println("4. Number of user = " + listUser.size());
 
-//		MongoFunctions.dropDB(mongoOperation);
+		// MongoFunctions.dropDB(mongoOperation);
 
 	}
 }
