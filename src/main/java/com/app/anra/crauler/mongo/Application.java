@@ -42,7 +42,7 @@ public class Application {
 
 			if (e.getNumEmployers() > numEmpleados) {
 				e.setTweets(TwitterRestClient.getTweets((Util.cleanName(e.getName()))));
-				// AQUI NO CAMBIA LAS VALORACIONES
+				
 				if (e.getTweets() != null)
 					e.setTweets(meaningCloudRestClient.getValoraciones(e.getTweets()));
 			}
@@ -54,13 +54,8 @@ public class Application {
 		MongoFunctions.insertarEmpresasEnBD(empresas, mongoOperation);
 
 		// Aplicamos MapReduce.
+		System.out.println("calculando la valoraciones medias ... ");
 		MongoFunctions.calcularMedia();
-
-
-		ArrayList<Oferta> listUser = MongoFunctions.findAll(mongoOperation);
-		System.out.println("4. Number of user = " + listUser.size());
-
-		// MongoFunctions.dropDB(mongoOperation);
 
 	}
 }

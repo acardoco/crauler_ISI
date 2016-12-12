@@ -54,7 +54,7 @@ public class Util {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public static Document getHtml(String url, String ruta_fich) throws IOException {
-		File input = new File(ruta_fich);
+
 		Document doc = Jsoup.connect(url).timeout(0).get();
 
 		return doc;
@@ -99,43 +99,33 @@ public class Util {
 		return newName.trim();
 	}
 
-	/*public static Integer setValoraciones(String val) {
-		int returned = 0;
-		if (val.equals("P+"))
-			returned = 5;
-		if (val.equals("P"))
-			returned = 4;
-		if (val.equals("NEU"))
-			returned = 3;
-		if (val.equals("N"))
-			returned = 2;
-		if (val.equals("N+"))
-			returned = 1;
-		return returned;
-	}*/
+	/*
+	 * public static Integer setValoraciones(String val) { int returned = 0; if
+	 * (val.equals("P+")) returned = 5; if (val.equals("P")) returned = 4; if
+	 * (val.equals("NEU")) returned = 3; if (val.equals("N")) returned = 2; if
+	 * (val.equals("N+")) returned = 1; return returned; }
+	 */
 
 	public static void main(String[] args) throws Exception {
 		System.out.println(cleanName("Halcon Viajes Franquicia"));
-		
-		
+
 		String fecha = "Hace 8 horas.";
 		fecha = fecha.toLowerCase().replace("hace", "").replace("más de", "").trim();
-		
+
 		Calendar cal = Calendar.getInstance();
 		int num = -Integer.parseInt(fecha.split("\\s+")[0].trim());
-		
-		if(fecha.contains("horas") || fecha.contains("hora")){
+
+		if (fecha.contains("horas") || fecha.contains("hora")) {
 			cal.add(Calendar.HOUR, num);
-			
-		} else if (fecha.contains("días") || fecha.contains("día")){
+
+		} else if (fecha.contains("días") || fecha.contains("día")) {
 			cal.add(Calendar.DATE, num);
 		}
-		
+
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(cal.getTime());
 		System.out.println(formatted);
-		
-	
+
 	}
 
 }

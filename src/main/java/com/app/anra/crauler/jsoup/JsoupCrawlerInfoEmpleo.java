@@ -296,7 +296,7 @@ public class JsoupCrawlerInfoEmpleo {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void main(String args[]) throws IOException {
-		// System.out.println(getNombreEmpresaAndLocalizacionInfoEmpleo(infoempleo_url));
+		
 		List<Oferta> a = getAllPagesInfoEmpleo();
 
 		for (int i = 0; i < a.size(); i++) {
