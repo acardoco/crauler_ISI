@@ -74,48 +74,54 @@ public interface MongoFunctions extends MongoRepository<Oferta, String> {
 		DB db = mongoClient.getDB("craulerdb");
 		DBCollection ofertas = db.getCollection("ofertas");
 
-		MapReduceCommand cmd = new MapReduceCommand(ofertas, map, reduce, null, MapReduceCommand.OutputType.INLINE, null);
+		MapReduceCommand cmd = new MapReduceCommand(ofertas, map, reduce, null, MapReduceCommand.OutputType.INLINE,
+				null);
 		MapReduceOutput out = ofertas.mapReduce(cmd);
-		
+
 		for (DBObject o : out.results()) {
 			System.out.println(o.toString());
 		}
 	}
-	
+
 	static void calcularMedia() throws UnknownHostException {
 
 		String map = "function () { var empresa = this; empresa.tweets.forEach(function(item){ "
 				+ "emit(empresa.name, item.valoracion); });}";
-		
+
 		String reduce = "function(key, values) { var count = 0; var media = 0; values.forEach(function(value){ "
 				+ "if (value != 'NONE'){ count++; if(value == 'P+') media = media + 5; if(value == 'P') media = media + 4;"
-						+ "if(value == 'NEU') media = media + 3; if(value == 'N') media = media + 2;"
-								+ "if(value == 'N+') media = media + 1;}}); if (count != 0) media = Math.round(media/count);"
-								+ "if(media == 1) return 'N+'; if(media == 2) return 'N'; if(media == 3) return 'NEU';"
-								+ "if(media == 4) return 'P'; if(media == 5) return 'P+'; else return 'NONE'}";
+				+ "if(value == 'NEU') media = media + 3; if(value == 'N') media = media + 2;"
+				+ "if(value == 'N+') media = media + 1;}}); if (count != 0) media = Math.round(media/count);"
+				+ "if(media == 1) return 'N+'; if(media == 2) return 'N'; if(media == 3) return 'NEU';"
+				+ "if(media == 4) return 'P'; if(media == 5) return 'P+'; else return 'NONE'}";
 
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
 		DB db = mongoClient.getDB("craulerdb");
 		DBCollection empresas = db.getCollection("empresas");
 
-		MapReduceCommand cmd = new MapReduceCommand(empresas, map, reduce, null, MapReduceCommand.OutputType.INLINE, null);
+		MapReduceCommand cmd = new MapReduceCommand(empresas, map, reduce, null, MapReduceCommand.OutputType.INLINE,
+				null);
 
 		MapReduceOutput out = empresas.mapReduce(cmd);
-		
-		
+
 		ArrayList<DBObject> resultados = new ArrayList<DBObject>();
-		for(DBObject o: out.results()) resultados.add(o);
-		BasicDBObject newDocument;;
+		for (DBObject o : out.results())
+			resultados.add(o);
+		BasicDBObject newDocument;
+		;
 		int i = 0;
-		
+
 		for (DBObject o : empresas.find()) {
-			
+
 			newDocument = new BasicDBObject();
-			newDocument.append("$set", new BasicDBObject().append("mediaValoraciones", resultados.get(i).get("value").toString()));
-			empresas.update(o, newDocument);
+			if (resultados.size() > i) {
+				newDocument.append("$set",
+						new BasicDBObject().append("mediaValoraciones", resultados.get(i).get("value").toString()));
+				empresas.update(o, newDocument);
+			}
 			i++;
 		}
-		    
+
 	}
 
 	/**

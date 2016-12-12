@@ -30,7 +30,7 @@ public class infoJobsAPIClientApache {
 	private static String infoJobsOffersURL = "/api/1/offer?page=";
 
 	/** The num pages. */
-	private static int numPages = 5; // MAX = 114;
+	private static int numPages = 20; // MAX = 114;
 
 	/** The info jobs company URL. */
 	private static String infoJobsCompanyURL = "/api/1/profile/";
