@@ -138,20 +138,4 @@ public class infoJobsAPIClientApache {
 		return (!salarioTotal.trim().isEmpty() ? salarioTotal.toLowerCase().replace(" €", "€") : null);
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args
-	 *            the arguments
-	 * @throws Exception
-	 *             the exception
-	 */
-	public static void main(String[] args) throws Exception {
-
-		InfoJobsVO pruebecita = getOfertasAndEmpresas();
-		for (Oferta o : pruebecita.getOfertas()) {
-			System.out.println(o.toString());
-		}
-	}
-
 }
